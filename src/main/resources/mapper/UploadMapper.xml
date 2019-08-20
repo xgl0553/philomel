@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.qinjian.philomel.mapper.UploadMapper">
+    <insert id="addDiskInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into disk_info (uuid,type,update_time,mountpoint,total,percent,free,used)
+        values
+        <foreach collection="diskInfos" item="disk" index="index" separator=",">
+            (#{uuid},#{type},#{date},#{disk.mountpoint},#{disk.total},#{disk.percent},#{disk.free},#{disk.used})
+        </foreach>
+    </insert>
+</mapper>

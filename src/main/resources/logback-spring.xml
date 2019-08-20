@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--
+       文件路径:以相对路径../logs。
+           若部署到Tomcat下，则在Tomcat下的logs文件中
+    -->
+    <property name="LOG_DIR" value="../logs" />
+
+    <!-- 日志记录器，日期滚动记录 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 归档的日志文件的名称-->
+            <fileNamePattern>${LOG_DIR}/mgr-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--日志文件保留天数-->
+            <!--
+            <MaxHistory>30</MaxHistory>
+            -->
+        </rollingPolicy>
+        <!-- 追加方式记录日志 -->
+        <append>true</append>
+        <!-- 日志文件的格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!--日志文件最大的大小-->
+        <!--
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+        -->
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--encoder 默认配置为PatternLayoutEncoder-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 日志级别定义指定appender-->
+    <!--
+    <logger name="org.springframework" level="ERROR" />
+    <logger name="org.hibernate" level="ERROR"  additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    -->
+    <logger name="org.apache.ibatis" level="DEBUG" />
+    <logger name="org.mybatis.spring" level="DEBUG" />
+    <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
+    <root level="ERROR">
+        <!--
+        <appender-ref ref="FILE" /> -->
+        <!-- 生产环境将请stdout去掉 -->
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
