@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/static/jstree/themes/default/style.min.css}"/>
+    <script th:src="@{/static/jquery.min.js}"></script>
+    <script th:src="@{/static/jstree/jstree.min.js}"></script>
+    <title>index</title>
+</head>
+<body>
+    <p>厉害</p>
+    <div id="jstree"></div>
+    <script>
+        $(function () {
+            $('#jstree').jstree({
+                'core': {
+                    'data': [{
+                        "id": "root",
+                        "text": "根节点",
+                        "state": {    //默认状态展开
+                            "opened": true
+                        },
+                        "children": []
+                    }],
+                    'check_callback': true
+                },
+                'plugins': ["contextmenu","state"]
+
+            });
+            $('#jstree').on("changed.jstree", function (e, data) {
+                console.log(data.selected);
+            });
+            $('button').on('click', function () {
+                $('#jstree').jstree(true).select_node('child_node_1');
+                <!--        $('#jstree').jstree('select_node', 'child_node_1');-->
+                <!--        $.jstree.reference('#jstree').select_node('child_node_1');-->
+            });
+        });
+    </script>
+</body>
+</html>
